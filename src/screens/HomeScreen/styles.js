@@ -25,6 +25,20 @@ export default styles = StyleSheet.create({
   buttonHomeText: {
     textAlign: 'center',
     fontSize: 18
+  },
+  buttonEmptyState: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: '#FFFFFF',
+    paddingBottom: 26,
+    paddingTop: 26
+  },
+  buttonEmptyStateText: {
+    textAlign: 'center',
+    fontSize: 18,
+    width: '60%'
   }
 
 })
