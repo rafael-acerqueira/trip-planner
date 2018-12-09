@@ -1,41 +1,54 @@
 import React, { Component } from 'react'
-import { View, Text, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, View, Text, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'space-between'
+  },
+  wrapperLogo: {
+    flex: 1,
+    flexGrow: 2,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonHome: {
+    flex: 1,
+    flexGrow: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    paddingBottom: 26,
+    paddingTop: 26
+  },
+  buttonHomeText: {
+    textAlign: 'center',
+    fontSize: 18
+  }
+
+})
+
+const assets = {
+  background: require('../../assets/background.png'),
+  logo: require('../../assets/logo.png')
+}
 
 class HomeScreen extends Component {
   render(){
     return(
       <ImageBackground
-        source={require('../../assets/background.png')}
+        source={assets.background}
         imageStyle={{ resizeMode: 'stretch'}}
-        style={{
-          flex: 1,
-          alignItems: 'stretch',
-          justifyContent: 'space-between'
-        }}
+        style={styles.background}
       >
-        <View style={{
-          flex: 1,
-          flexGrow: 2,
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <Image source={require('../../assets/logo.png')} />
+        <View style={styles.wrapperLogo}>
+          <Image source={assets.logo} />
         </View>
         <TouchableWithoutFeedback>
-          <View style={{
-            flex: 1,
-            flexGrow: 0,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#FFFFFF',
-            paddingBottom: 26,
-            paddingTop: 26
-          }}>
-            <Text style={{
-              textAlign: 'center',
-              fontSize: 18
-            }}>
+          <View style={styles.buttonHome}>
+            <Text style={styles.buttonHomeText}>
               COMEÇAR!
             </Text>
           </View>
