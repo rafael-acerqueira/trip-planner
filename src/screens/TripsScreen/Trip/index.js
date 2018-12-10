@@ -9,8 +9,8 @@ const Trip = props => {
       <View style={[ styles.wrapperImage, { width: dim.width - 32 }]}>
         <Text>Image</Text>
       </View>
-      <Text>Portugal</Text>
-      <Text style={styles.price}>R$ 20000</Text>
+      <Text>{props.title}</Text>
+      <Text style={styles.price}>{props.price}</Text>
     </View>
   )
 }

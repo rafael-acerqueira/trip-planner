@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import Trip from './Trip'
 class TripsScreen extends Component {
 
@@ -7,7 +7,15 @@ class TripsScreen extends Component {
     header: null
   }
 
+  renderItem = item => {
+    return <Trip title={item.item.title} price={item.item.price}/>
+  }
+
   render(){
+    const trips = [
+      { id: '1', title: 'Portugal', price: 'R$2000'},
+      { id: '2', title: 'Luxemburgo', price: 'R$15000' }
+    ]
     return(
       <View style={{
         flex: 1,
@@ -22,7 +30,13 @@ class TripsScreen extends Component {
         <View style={{
           backgroundColor: 'green'
         }}>
-          <Trip />
+          <FlatList
+            data={trips}
+            renderItem={this.renderItem}
+            horizontal
+            pagingEnabled
+            keyExtractor={ item => item.id}
+          />
         </View>
       </View>
     )

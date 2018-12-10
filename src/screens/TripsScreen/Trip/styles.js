@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   wrapperTrip: {
     paddingLeft: 16,
     paddingTop: 16,
+    paddingRight: 16,
     backgroundColor: '#FFF'
   },
   wrapperImage: {
