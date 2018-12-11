@@ -36,7 +36,7 @@ class HomeScreen extends Component {
               </View>
             </TouchableWithoutFeedback>
           :
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Trips')}>
               <View style={styles.buttonEmptyState}>
                 <Image source={assets.pin} />
                 <Text style={styles.buttonEmptyStateText}>
