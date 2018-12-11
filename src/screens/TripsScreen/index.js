@@ -8,13 +8,13 @@ class TripsScreen extends Component {
   }
 
   renderItem = item => {
-    return <Trip title={item.item.title} price={item.item.price}/>
+    return <Trip onPress={() => this.props.navigation.navigate('Trip')} name={item.item.name} price={item.item.price}/>
   }
 
   render(){
     const trips = [
-      { id: '1', title: 'Portugal', price: 'R$2000'},
-      { id: '2', title: 'Luxemburgo', price: 'R$15000' }
+      { id: '1', name: 'Portugal', price: 'R$2000'},
+      { id: '2', name: 'Luxemburgo', price: 'R$15000' }
     ]
     return(
       <View style={{
