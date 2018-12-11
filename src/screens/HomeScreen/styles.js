@@ -28,6 +28,7 @@ export default styles = StyleSheet.create({
   },
   buttonEmptyState: {
     flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',

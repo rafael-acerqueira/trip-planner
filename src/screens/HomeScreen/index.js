@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
 import assets from './assets'
 import styles from './styles'
+import isIphoneX from '../../utils/isIphoneX'
 
 class HomeScreen extends Component {
 
@@ -10,7 +11,11 @@ class HomeScreen extends Component {
   }
 
   state = {
-    show: true
+    show: false
+  }
+
+  handleClick = () => {
+    this.setState({ show: !this.state.show })
   }
 
   render(){
@@ -25,8 +30,8 @@ class HomeScreen extends Component {
         </View>
         {
           !this.state.show ?
-            <TouchableWithoutFeedback>
-              <View style={styles.buttonHome}>
+            <TouchableWithoutFeedback onPress={this.handleClick}>
+              <View style={[styles.buttonHome, isIphoneX() ? { paddingBottom: 32 } : null]}>
                 <Text style={styles.buttonHomeText}>COMEÇAR!</Text>
               </View>
             </TouchableWithoutFeedback>
@@ -37,7 +42,7 @@ class HomeScreen extends Component {
                 <Text style={styles.buttonEmptyStateText}>
                   Vamos planejar a sua primeira viagem?
                 </Text>
-                <Image source={assets.arrow} />
+                <Image source={assets.arrow} style={isIphoneX() ? { marginBottom: 16 } : null }/>
               </View>
             </TouchableWithoutFeedback>
         }
