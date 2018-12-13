@@ -38,7 +38,7 @@ class TripsScreen extends Component {
           />
 
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('AddPoint')}
+            onPress={() => this.props.navigation.navigate('AddTrip')}
             style={{
               position: 'absolute',
               right: 17,
