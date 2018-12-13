@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
+import MapView from 'react-native-maps'
 import Trip from './Trip'
 import isIphoneX from '../../utils/isIphoneX'
 
@@ -24,10 +25,29 @@ class TripsScreen extends Component {
         justifyContent: 'space-between'
       }}>
         <View  style={{
-          backgroundColor: 'blue',
           flex: 1
         }}>
-          <Text> Map </Text>
+          <MapView
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+          />
+
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('AddPoint')}
+            style={{
+              position: 'absolute',
+              right: 17,
+              top: 14,
+              padding: 10
+            }}
+          >
+            <Image source={require('../../../assets/add.png')} />
+          </TouchableOpacity>
         </View>
         <View style={{
           backgroundColor: 'green'
