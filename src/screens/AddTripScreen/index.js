@@ -8,13 +8,13 @@ class AddTripScreen extends Component {
   }
 
   state = {
-    trip: ''
+    name: ''
   }
 
   handleSave = async() => {
     const trip = {
       id: new Date().getTime(),
-      trip: this.state.trip,
+      name: this.state.name,
       price: 0,
       latitude: 0,
       longitude: 0
@@ -30,7 +30,10 @@ class AddTripScreen extends Component {
 
     await AsyncStorage.setItem('trips', JSON.stringify(trips))
 
+    this.props.navigation.state.params.refresh()
     this.props.navigation.navigate('AddPoint', { id: trip.id })
+
+    //this.props.navigation.goBack()
   }
 
   render(){
@@ -41,7 +44,7 @@ class AddTripScreen extends Component {
             <Image source={require('../../../assets/arrow-left-white.png')} />
           </TouchableOpacity>
         </View>
-        <TextInput style={styles.input} placeholder='Nome da Viagem' onChangeText={(txt => this.setState({ trip: txt }))} />
+        <TextInput style={styles.input} placeholder='Nome da Viagem' onChangeText={(txt => this.setState({ name: txt }))} />
         <TouchableOpacity style={styles.btn} onPress={this.handleSave}>
           <Text style={styles.btnText}>Salvar</Text>
         </TouchableOpacity>
