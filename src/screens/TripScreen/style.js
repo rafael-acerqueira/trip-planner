@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingLeft: 21,
     paddingRight: 21
   },
-  
+
 })
 
 export default styles
