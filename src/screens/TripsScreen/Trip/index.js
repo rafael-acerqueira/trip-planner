@@ -10,7 +10,7 @@ const Trip = props => {
         <Text>Image</Text>
       </View>
       <Text>{props.name}</Text>
-      <Text style={styles.price}>{props.price}</Text>
+      <Text style={styles.price}>R$ {parseFloat(props.price).toFixed(2)}</Text>
     </TouchableOpacity>
   )
 }
