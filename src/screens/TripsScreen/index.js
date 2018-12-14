@@ -32,6 +32,37 @@ class TripsScreen extends Component {
     return <Trip onPress={() => this.props.navigation.navigate('Trip', { id: item.item.id, refresh: this.loadData })} name={item.item.name} price={item.item.price}/>
   }
 
+  handleItemChange = info => {
+    const { viewableItems } = info
+
+    if(viewableItems && viewableItems.length > 0){
+      const[item] = viewableItems
+      this.map.animateToRegion(
+        this.regionFrom(item.item.latitude, item.item.longitude, 1000),
+        4000
+      )
+    }
+  }
+
+  regionFrom = (lat, lon, distance) => {
+      distance = distance/2
+      const circumference = 40075
+      const oneDegreeOfLatitudeInMeters = 111.32 * 1000
+      const angularDistance = distance/circumference
+
+      const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
+      const longitudeDelta = Math.abs(Math.atan2(
+              Math.sin(angularDistance)*Math.cos(lat),
+              Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
+
+      return result = {
+          latitude: lat,
+          longitude: lon,
+          latitudeDelta,
+          longitudeDelta,
+      }
+  }
+
   render(){
     return(
       <View style={{
@@ -49,6 +80,7 @@ class TripsScreen extends Component {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421
             }}
+            ref={ref => this.map = ref}
           />
 
           <TouchableOpacity
@@ -75,6 +107,8 @@ class TripsScreen extends Component {
             style={[
               isIphoneX() ? { marginBottom: 20 } : null
             ]}
+            onViewableItemsChanged={this.handleItemChange}
+
           />
         </View>
       </View>
