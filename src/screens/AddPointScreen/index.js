@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Image, AsyncStorage } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import styles from './style'
 class AddPointScreen extends Component {
@@ -9,6 +9,7 @@ class AddPointScreen extends Component {
   }
 
   state = {
+    id: new Date().getTime(),
     position: {
       latitude: 37.78825,
       longitude: -122.4324
@@ -18,30 +19,43 @@ class AddPointScreen extends Component {
     price: 0
   }
 
-  renderItem = item => {
-    return (
-      <View style={styles.item}>
-        <View>
-          <Text style={styles.itemName}>{item.item.name}</Text>
-          <Text style={styles.itemDescription}>{item.item.description}</Text>
-        </View>
-        <View>
-          <Text style={styles.itemPrice}>{item.item.price}</Text>
-        </View>
-      </View>
-    )
+  handleSave = async() => {
+    const id = this.props.navigation.state.params.id
+    const pointsAS = await AsyncStorage.getItem('trip-' + id)
+    let points = []
+
+    if(pointsAS){
+      points = JSON.parse(pointsAS)
+    }
+
+    points.push(this.state)
+    await AsyncStorage.setItem('trip-' + id, JSON.stringify(points))
+
+    let total = 0
+    points.forEach( p => {
+      total += p.price
+    })
+    const tripsAS = await AsyncStorage.getItem('trips')
+    let trips = []
+    if(tripsAS){
+      trips = JSON.parse(tripsAS)
+    }
+
+    let trip = {}
+    trips.forEach( (trip, index) => {
+      if(trip.id === id){
+        trips[index].price = total
+        trips[index].latitude = points[0].position.latitude
+        trips[index].longitude = points[0].position.longitude
+      }
+    })
+
+    await AsyncStorage.setItem('trips', JSON.stringify(trips))
+    this.props.navigation.state.params.refresh()
+    this.props.navigation.goBack()
   }
 
   render(){
-    const trip = {
-      name: 'Eurotrip 2019',
-      price: 'R$ 35000',
-      places: [
-        { id: '1', name: 'Portugal', description: 'Bonde', price: 100, lat: 0, long: 0 },
-        { id: '2', name: 'Espanha', description: 'Chegada', price: 300, lat: 0, long: 0 },
-        { id: '3', name: 'Bruxelas', description: 'City Tour', price: 500, lat: 0, long: 0}
-      ]
-    }
     return(
       <View style={{ flex: 1 }}>
         <MapView style={{ flex: 1 }} initialRegion={{
@@ -71,8 +85,8 @@ class AddPointScreen extends Component {
         </View>
         <TextInput style={styles.input} placeholder='Nome do local' onChangeText={(txt => this.setState({ pointName: txt }))} />
         <TextInput style={styles.input} placeholder='Descrição' onChangeText={(txt => this.setState({ description: txt }))} />
-        <TextInput style={styles.input} placeholder='Valor R$' onChangeText={(txt => this.setState({ price: txt }))} />
-        <TouchableOpacity style={styles.btn}>
+        <TextInput style={styles.input} placeholder='Valor R$' onChangeText={(txt => this.setState({ price: parseFloat(txt) }))} />
+        <TouchableOpacity style={styles.btn} onPress={this.handleSave}>
           <Text style={styles.btnText}>Salvar</Text>
         </TouchableOpacity>
       </View>
